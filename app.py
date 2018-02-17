@@ -15,11 +15,16 @@ def names():
     names_data = belly_button.names()
     return render_template("names.html", names_data=names_data)
 
-# @app.route('/names')
-# def names():
-#     data = belly_button.names()
-#     print(data)
-#     return render_template("names.html", data=data)
+@app.route('/otu')
+def otu():
+    otu_data = belly_button.otu_list()
+    return render_template("otu.html", otu_data=otu_data)
+
+@app.route('/metadata/<sample>')
+def metadata(sample):
+    metadata_data  = belly_button.json()
+    return render_template("metadata.html", sample=sample, metadata_data=metadata_data)
+
 
 if __name__ == "__main__":
     app.run(debug=True)

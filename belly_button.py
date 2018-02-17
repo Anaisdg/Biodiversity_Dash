@@ -49,7 +49,6 @@ def json():
 
     json_dict = df.to_dict('index')
 
-
     return json_dict
 
 if __name__ == "__main__":
@@ -67,6 +66,8 @@ def washing():
 
 
     washing_dict = df2.to_dict('index')
+
+    print(washing_dict)
 
     return washing_dict
 

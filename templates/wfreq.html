@@ -1,11 +1,11 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Sample Names</title>
+  <title>WFREQ</title>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <linke rel="stylesheet" type="text/css" href="{{url_for('static', filename='static.css')}}">
 </head>
@@ -20,19 +20,11 @@
     <div class="container-fluid">
       <div class="row">
         <div class="col-md-12">
-          <h2>Sample Names</h2>
-          <table>
-          {% for t in names_data %}
-              <tr>
-              {% for i in t %}
-                  <td>{{ i }}</td>
-              {% endfor %}
-              </tr>
-          {% endfor %}
-           </table>
+          <h2>Sample Metadata</h2>
+          {% print(wfreq_data) %}
         </div>
       </div>
     </div>
 
   </body>
-  </html>
+  </html> -->
