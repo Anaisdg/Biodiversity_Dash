@@ -32,7 +32,7 @@ def otu_list():
 if __name__ == "__main__":
     otu_list()
 
-def json(sample):
+def json():
 
     idx = 0
     new_col = bio_diversity_metadata['SAMPLEID']
@@ -49,34 +49,40 @@ def json(sample):
 
     json_dict = df.to_dict('index')
 
-    sample_dict = json_dict[sample]
 
-    # keys = list(sample_dict.keys())
-    # values = list(sample_dict.values())
-
-    return sample_dict
-    # return keys
-    # return values
+    return json_dict
 
 if __name__ == "__main__":
     json()
 
 def washing():
 
+    idx = 0
+    new_col = bio_diversity_metadata['SAMPLEID']
+    bio_diversity_metadata.insert(loc=idx, column='sample', value=new_col)
+
+    bio_diversity_metadata['sample'] = 'BB_' + bio_diversity_metadata['sample'].astype(str)
 
     df2 = bio_diversity_metadata[['sample','WFREQ']]
 
-
-
     df2 = df2.set_index('sample')
-
-
 
     washing_dict = df2.to_dict('index')
 
-    print(washing_dict)
-
     return washing_dict
+
+def samples_data(sample3):
+
+    top_samples = samples.sort_values(by=[sample3], ascending=False)
+
+    top_samples = top_samples[0:10]
+
+    top_samples = pd.DataFrame(top_samples[sample3])
+
+    top_samples = top_samples[sample3].tolist()
+
+    return top_samples
+
 
 if __name__ == "__main__":
     washing()
