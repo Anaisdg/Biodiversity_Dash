@@ -22,7 +22,7 @@ def otu():
 
 @app.route('/metadata/<sample>')
 def metadata(sample):
-    metadata_data  = belly_button.json()[sample]
+    metadata_data  = belly_button.json(sample)
     values = list(metadata_data.values())
     keys = list(metadata_data.keys())
     return render_template("metadata.html", sample=sample, metadata_data=metadata_data, values=values, keys = keys)
@@ -36,6 +36,6 @@ def wfreq(sample2):
 def samples(sample3):
     samples_data = belly_button.samples_data(sample3)
     return render_template("samples.html", samples_data=samples_data)
-    
+
 if __name__ == "__main__":
     app.run(debug=True)

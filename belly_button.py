@@ -32,25 +32,31 @@ def otu_list():
 if __name__ == "__main__":
     otu_list()
 
-def json():
+def json(sample):
 
     idx = 0
     new_col = bio_diversity_metadata['SAMPLEID']
-    bio_diversity_metadata.insert(loc=idx, column='sample', value=new_col)
 
+    try:
+        bio_diversity_metadata.insert(loc=idx, column='sample', value=new_col)
 
-    bio_diversity_metadata['sample'] = 'BB_' + bio_diversity_metadata['sample'].astype(str)
+        bio_diversity_metadata['sample'] = 'BB_' + bio_diversity_metadata['sample'].astype(str)
 
-    df = bio_diversity_metadata[['sample','AGE','BBTYPE','ETHNICITY','GENDER','LOCATION','SAMPLEID']]
+        df = bio_diversity_metadata[['sample','AGE','BBTYPE','ETHNICITY','GENDER','LOCATION','SAMPLEID']]
 
+        df = df.set_index('sample')
 
-    df = df.set_index('sample')
+        json_dict = df.to_dict('index')
 
+        return json_dict[sample]
+    except ValueError:
+        df = bio_diversity_metadata[['sample','AGE','BBTYPE','ETHNICITY','GENDER','LOCATION','SAMPLEID']]
 
-    json_dict = df.to_dict('index')
+        df = df.set_index('sample')
 
+        json_dict = df.to_dict('index')
 
-    return json_dict
+        return json_dict[sample]
 
 if __name__ == "__main__":
     json()
