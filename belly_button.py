@@ -2,6 +2,11 @@ import pandas as pd
 
 bio_diversity_metadata = pd.read_csv("DataSets/Belly_Button_Biodiversity_Metadata.csv")
 
+idx = 0
+new_col = bio_diversity_metadata['SAMPLEID']
+bio_diversity_metadata.insert(loc=idx, column='sample', value=new_col)
+
+bio_diversity_metadata['sample'] = 'BB_' + bio_diversity_metadata['sample'].astype(str)
 
 
 otu = pd.read_csv("DataSets/belly_button_biodiversity_otu_id.csv")
@@ -34,40 +39,18 @@ if __name__ == "__main__":
 
 def json(sample):
 
-    idx = 0
-    new_col = bio_diversity_metadata['SAMPLEID']
+    df = bio_diversity_metadata[['sample','AGE','BBTYPE','ETHNICITY','GENDER','LOCATION','SAMPLEID']]
 
-    try:
-        bio_diversity_metadata.insert(loc=idx, column='sample', value=new_col)
+    df = df.set_index('sample')
 
-        bio_diversity_metadata['sample'] = 'BB_' + bio_diversity_metadata['sample'].astype(str)
+    json_dict = df.to_dict('index')
 
-        df = bio_diversity_metadata[['sample','AGE','BBTYPE','ETHNICITY','GENDER','LOCATION','SAMPLEID']]
-
-        df = df.set_index('sample')
-
-        json_dict = df.to_dict('index')
-
-        return json_dict[sample]
-    except ValueError:
-        df = bio_diversity_metadata[['sample','AGE','BBTYPE','ETHNICITY','GENDER','LOCATION','SAMPLEID']]
-
-        df = df.set_index('sample')
-
-        json_dict = df.to_dict('index')
-
-        return json_dict[sample]
+    return json_dict[sample]
 
 if __name__ == "__main__":
     json()
 
 def washing():
-
-    idx = 0
-    new_col = bio_diversity_metadata['SAMPLEID']
-    bio_diversity_metadata.insert(loc=idx, column='sample', value=new_col)
-
-    bio_diversity_metadata['sample'] = 'BB_' + bio_diversity_metadata['sample'].astype(str)
 
     df2 = bio_diversity_metadata[['sample','WFREQ']]
 
