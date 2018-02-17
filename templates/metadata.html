@@ -7,7 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Sample Metadata</title>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  <linke rel="stylesheet" type="text/css" href="{{url_for('static', filename='static.css')}}">
+  <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='static.css')}}">
 </head>
 
 <body>
@@ -21,7 +21,20 @@
       <div class="row">
         <div class="col-md-12">
           <h2>Sample Metadata</h2>
-          {% print(metadata_data[sample]) %}
+          <!-- {% print(metadata_data) %}
+          {% print(values) %} -->
+          <table>
+              <tr>
+              {% for i in keys %}
+                  <td>{{ i }}</td>
+              {% endfor %}
+              </tr>
+              <tr>
+              {% for i in values %}
+                  <td>{{ i }}</td>
+              {% endfor %}
+              </tr>
+           </table>
         </div>
       </div>
     </div>

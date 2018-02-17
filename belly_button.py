@@ -32,7 +32,7 @@ def otu_list():
 if __name__ == "__main__":
     otu_list()
 
-def json():
+def json(sample):
 
     idx = 0
     new_col = bio_diversity_metadata['SAMPLEID']
@@ -49,7 +49,14 @@ def json():
 
     json_dict = df.to_dict('index')
 
-    return json_dict
+    sample_dict = json_dict[sample]
+
+    # keys = list(sample_dict.keys())
+    # values = list(sample_dict.values())
+
+    return sample_dict
+    # return keys
+    # return values
 
 if __name__ == "__main__":
     json()
