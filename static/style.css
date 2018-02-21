@@ -1,8 +1,12 @@
 table {
     border-collapse: collapse;
-    color: 'blue'
+    color: 'blue';
 }
 
 table, tr, td {
     border: 1px solid black;
+}
+
+h2 {
+  color: 'blue';
 }

@@ -7,7 +7,9 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Belly Button Biodiversity</title>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  <linke rel="stylesheet" type="text/css" href="{{url_for('static', filename='static.css')}}">
+  <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='static.css')}}">
+  <link rel="stylesheet" type="text/css" href="../static/static.css')}}">
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 </head>
 
 <body>
@@ -20,7 +22,28 @@
     <div class="container-fluid">
       <div class="row">
         <div class="col-md-12">
-          <h2>Home Page</h2>
+          <h2>Some Description</h2>
         </div>
       </div>
-    </div>
+
+      <!-- dropdownmenu -->
+
+      <div class="row">
+        <div class="col-md-12">
+          <h3>Dropdown Menu</h3>
+            <select id="selDataset" onchange="optionChanged(this.value)">
+              <option>Select Sample</option>
+            </select>
+
+              <ul id="meta"></ul>
+
+              <div id="pie"></div>
+
+              <div id="wfreq"></div>
+
+              <div id="pie"></div>
+        </div>
+      </div>
+
+    <script type="text/javascript" src="../static/dropdown.js">
+    </script>

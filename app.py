@@ -1,6 +1,7 @@
 from flask import Flask, render_template, jsonify, redirect
 from flask_pymongo import PyMongo
 import belly_button
+import json
 
 
 app = Flask(__name__)
@@ -13,7 +14,8 @@ def index():
 @app.route('/names')
 def names():
     names_data = belly_button.names()
-    return render_template("names.html", names_data=names_data)
+    # return render_template("names.html", names_data=names_data)
+    return jsonify(names_data)
 
 @app.route('/otu')
 def otu():
