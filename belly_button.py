@@ -66,11 +66,13 @@ def samples_data(sample3):
 
     top_samples = top_samples[0:10]
 
-    top_samples = pd.DataFrame(top_samples[sample3])
+    top_id = top_samples.index.tolist()
 
     top_samples = top_samples[sample3].tolist()
 
-    return top_samples
+    top = {"id":top_id, "sample":top_samples}
+
+    return top
 
 
 if __name__ == "__main__":

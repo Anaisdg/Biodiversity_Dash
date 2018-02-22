@@ -33,11 +33,11 @@ function optionChanged(sel){
 
     // Create a PIE chart that uses data from routes /samples/<sample> and /otu to display the top 10 samples.
 
-    Plotly.d3.json(url3, function (error, pieData) {
+    Plotly.d3.json(url4, function (error, pieData) {
 
-            var pie_labels = pieData['otu_id']
+            var pie_labels = pieData['id']
 
-            var pie_values = pieData['sample_values']
+            var pie_values = pieData['sample']
 
             var data = [{
                 values: pie_values,
@@ -50,9 +50,153 @@ function optionChanged(sel){
                 width: 700,
                 title: "Biodiversity Pie Chart",
             };
-            Plotly.newPlot("plot1", data, layout);
+            Plotly.newPlot("piechart", data, layout);
 
         });
+
+        // STEP THREE
+
+        // Create a Bubble Chart that uses data from your routes /samples/<sample> and /otu to plot the Sample Value vs the OTU ID for the selected sample.
+
+
+        Plotly.d3.json(url4, function (error, bubbleData) {
+
+                var labels = bubbleData['id']
+
+                var values = bubbleData['sample']
+
+                var data = [{
+                    y: values,
+                    x: labels,
+                    mode: 'markers',
+                    marker: {
+                        color: labels, colorscale: 'Viridis', colorbar: {
+                            titleside: 'right'}, size: values, sizeref: 1 },
+                    type: 'scatter'
+                }];
+
+                var layout = {
+                    height: 500,
+                    width: 1000,
+                    title: "Bacteria Diversity Bubble Plot",
+                    xaxis: { range: [0, 4000], dtick: 1000, title: "OTU ID" },
+                    yaxis: { range: [0, 2600], title: "Bacteria Count" },
+                };
+                Plotly.newPlot("bubbleplot", data, layout);
+
+            });
+
+            // STEP FOUR
+
+            // Display the sample metadata from the route /metadata/<sample>
+
+
+
+                Plotly.d3.json(url2, function (error, metadata) {
+                    console.log(metadata);
+
+                    var keys = metadata['keys']
+                    var data = [metadata['data']]
+
+                    console.log(data);
+
+                    var table = Plotly.d3.select("#table").append("table").attr("class", "table");
+                    var header = table.append("thead").append("tr");
+                    header
+                            .selectAll("th")
+                            .data(columns)
+                            .enter()
+                            .append("th")
+                            .text(function(d) { return d; });
+                    var tablebody = table.append("tbody");
+                    rows = tablebody
+                            .selectAll("tr")
+                            .data(data)
+                            .enter()
+                            .append("tr");
+                    // We built the rows using the nested array - now each row has its own array.
+                    cells = rows.selectAll("td")
+                        // each row has data associated; we get it and enter it for the cells.
+                            .data(function (row) {
+                      		    return columns.map(function (column) {
+                      		      return {column: column, value: row[column]};
+                      		    })})
+                            .enter()
+                            .append("td")
+                            .text(function(d) {
+                                return d.value
+                            });
+                });
+
+                //STEP FIVE
+
+                //Create a gauage chart
+
+                Plotly.d3.json(url3, function (error, wfreq) {
+                    console.log(wfreq);
+                    var wfreq_level=wfreq['WFREQ']
+                    //convert level from 0 to 10 to 0 to 180
+                    var level = wfreq_level * 18;
+
+                    // Trig to calc meter point
+                    var degrees = 180 - level,
+                         radius = .5;
+                    var radians = degrees * Math.PI / 180;
+                    var x = radius * Math.cos(radians);
+                    var y = radius * Math.sin(radians);
+
+                    // Path: may have to change to create a better triangle
+                    var mainPath = 'M -.0 -0.025 L .0 0.025 L ',
+                         pathX = String(x),
+                         space = ' ',
+                         pathY = String(y),
+                         pathEnd = ' Z';
+                    var path = mainPath.concat(pathX,space,pathY,pathEnd);
+
+                    var data = [{ type: 'scatter',
+                       x: [0], y:[0],
+                        marker: {size: 14, color:'850000'},
+                        showlegend: false,
+                        name: 'speed',
+                        text: level,
+                        hoverinfo: 'text+name'},
+                      { values: [50 / 5, 50 / 5, 50 / 5, 50 / 5, 50 / 5, 50],
+                      rotation: 90,
+                      text: ['>8', '6-8', '4-6', '2-4', '0-2', ''],
+                      textinfo: 'text',
+                      textposition:'inside',
+                      marker: {colors:['rgba(14, 127, 0, .5)', 'rgba(110, 154, 22, .5)',
+                                             'rgba(170, 202, 42, .5)', 'rgba(202, 209, 95, .5)',
+                                             'rgba(210, 206, 145, .5)',
+                                             'rgba(255, 255, 255, 0)']},
+                      labels: ['>8', '6-8', '4-6', '2-4', '0-2', ''],
+                      hoverinfo: 'label',
+                      hole: .5,
+                      type: 'pie',
+                      showlegend: false
+                    }];
+
+                    var layout = {
+                      shapes:[{
+                          type: 'path',
+                          path: path,
+                          fillcolor: '850000',
+                          line: {
+                            color: '850000'
+                          }
+                        }],
+                      title: 'Washing Frequency Gauge Chart',
+                      height: 500,
+                      width: 500,
+                      xaxis: {zeroline:false, showticklabels:false,
+                                 showgrid: false, range: [-1, 1]},
+                      yaxis: {zeroline:false, showticklabels:false,
+                                 showgrid: false, range: [-1, 1]}
+                    };
+
+                    Plotly.newPlot('gaugechart', data, layout);
+                  });
+
 
 
     // Plotly.d3.json(url2, function (error, metaData) {

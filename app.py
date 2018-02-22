@@ -20,24 +20,25 @@ def names():
 @app.route('/otu')
 def otu():
     otu_data = belly_button.otu_list()
-    return render_template("otu.html", otu_data=otu_data)
+    return jsonify(otu_data)
 
 @app.route('/metadata/<sample>')
 def metadata(sample):
     metadata_data  = belly_button.json(sample)
     values = list(metadata_data.values())
     keys = list(metadata_data.keys())
-    return render_template("metadata.html", sample=sample, metadata_data=metadata_data, values=values, keys = keys)
+    metadata_dict = {"keys":keys, "values":values, "data":metadata_data}
+    return jsonify(metadata_dict)
 
 @app.route('/wfreq/<sample2>')
 def wfreq(sample2):
     wfreq_data  = belly_button.washing()[sample2]
-    return render_template("wfreq.html", sample2=sample2, wfreq_data=wfreq_data)
+    return jsonify(wfreq_data)
 
 @app.route('/samples/<sample3>')
 def samples(sample3):
     samples_data = belly_button.samples_data(sample3)
-    return render_template("samples.html", samples_data=samples_data)
+    return jsonify(samples_data)
 
 if __name__ == "__main__":
     app.run(debug=True)
